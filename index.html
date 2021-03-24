@@ -1,0 +1,137 @@
+<html>
+    <head>
+  <style type="text/css">
+  body{
+  background:#4F4F4F;
+  color:white;
+  font-family: 'Oswald', sans-serif;
+  display:flex;
+  justify-content:center;
+  padding-top:40px;
+}
+
+.ticket{
+  position:relative;
+  height:700px;
+  width:1380px;
+  background:black;
+  display:flex;
+  align-items:flex-end;
+  box-shadow: 0px 10px 40px rgba(0,0,0,.4);
+}
+
+
+canvas{
+  position:absolute;
+  border-radius:6px;
+  z-index:0;
+}
+.overlay{
+  position:absolute;
+  background:rgba(0, 0, 0, .2);
+  left:0; 
+  right:0;
+  top:0;
+  bottom:0;
+  z-index:1;
+}
+        </style>
+        <title>Dave's Art Page</title>
+    </head>
+    
+    <body>
+        <script src="js/three.min.js">
+        </script>
+        <script src="js/TweenMax.min.js">
+        </script>
+        <script src="js/hover.js">
+        </script>
+    <div class="ticket">
+        <div class="overlay"></div>        
+    </div>
+  </div>
+</div>  
+    <script>
+        var timeSec = 5
+        
+        window.pictures = new Array(
+          // 'https://image.shutterstock.com/image-vector/seamless-abstract-mosaic-pattern-piet-600w-405373903.jpg',
+          // 'https://image.shutterstock.com/image-illustration/breakfast-on-beach-metaphysical-landscape-600w-592974431.jpg',
+          // 'https://image.shutterstock.com/image-illustration/sunflowers-vincent-van-gogh-style-600w-396273769.jpg'
+          'https://uploads6.wikiart.org/images/salvador-dali/the-persistence-of-memory-1931.jpg!Large.jpg',
+          'https://upload.wikimedia.org/wikipedia/en/9/90/DaliGreatMasturbator.jpg',
+          'https://upload.wikimedia.org/wikipedia/en/e/e6/The_Burning_Giraffe.jpg',
+          'https://upload.wikimedia.org/wikipedia/en/c/c0/The_Temptation_of_St._Anthony.jpg'
+          )
+
+          function timer(ms) {
+            return new Promise(res => setTimeout(res, ms));
+          }
+          
+          var i = 0  //array counters to reset array back to 0 at end
+          var j = 1  
+          
+          async function load () { // We need to wrap the loop into an async function for this to work
+            while (i < pictures.length + 2) {              
+              if (j == 0){   //resets back to zero at last picture in array
+                i = 0
+                j = 1
+              }                
+              if (i == pictures.length - 1) {  //check end of picture array
+                j = 0
+              } else {
+                j = i + 1
+              }
+               new hoverEffect({
+                parent: document.querySelector('.ticket'),
+                intensity1: 0.5,
+                intensity2: 0.5,
+                speedIn: timeSec,
+                speedOut: 2,
+                angle: .4,
+                hover: false,                  
+                image1: pictures[i],
+                image2: pictures[j],
+                displacementImage: pictures[j]
+            }).next();
+              i++;
+              await timer(timeSec*1000); // then the created Promise can be awaited                  
+              
+            }
+          }
+load();
+
+
+  //       new hoverEffect({
+  //         parent: document.querySelector('.ticket'),
+  //         intensity1: 0.5,
+  //         intensity2: 0.5,
+  //         speedIn: timeSec,
+  //         speedOut: 2,
+  //         angle: .4,
+  //         hover: false,
+  //         image1: 'https://image.shutterstock.com/image-vector/seamless-abstract-mosaic-pattern-piet-600w-405373903.jpg',
+  //         image2: 'https://image.shutterstock.com/image-illustration/breakfast-on-beach-metaphysical-landscape-600w-592974431.jpg',
+  //         displacementImage: 'https://image.shutterstock.com/image-illustration/breakfast-on-beach-metaphysical-landscape-600w-592974431.jpg'
+  //       }).next();
+
+
+
+  // setTimeout(function(){
+  //       new hoverEffect({
+  //         parent: document.querySelector('.ticket'),
+  //         intensity1: 0.5,
+  //         intensity2: 0.5,
+  //         speedIn: timeSec,
+  //         speedOut: 2,
+  //         angle: .4,
+  //         hover: false,
+  //         image1: 'https://image.shutterstock.com/image-illustration/sunflowers-vincent-van-gogh-style-600w-396273769.jpg',
+  //         image2: 'https://image.shutterstock.com/image-vector/seamless-abstract-mosaic-pattern-piet-600w-405373903.jpg',
+  //         displacementImage: 'https://image.shutterstock.com/image-vector/seamless-abstract-mosaic-pattern-piet-600w-405373903.jpg'
+  //       }).next();}, timeSec*2*1000);
+
+    </script>
+
+    </body>
+</html>
